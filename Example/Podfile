@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'FMSwipify_Example' do
+  pod 'FMSwipify', :path => '../'
+
+  target 'FMSwipify_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
