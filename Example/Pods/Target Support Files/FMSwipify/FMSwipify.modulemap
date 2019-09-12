@@ -1,0 +1,6 @@
+framework module FMSwipify {
+  umbrella header "FMSwipify-umbrella.h"
+
+  export *
+  module * { export * }
+}

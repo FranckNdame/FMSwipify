@@ -1,0 +1,16 @@
+PODS:
+  - FMSwipify (0.1.0)
+
+DEPENDENCIES:
+  - FMSwipify (from `../`)
+
+EXTERNAL SOURCES:
+  FMSwipify:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  FMSwipify: adc74cd0b3ea4a1719c567f5a833f42c6fe72643
+
+PODFILE CHECKSUM: d000b10c773c04159cb62fb7eca72d965f724ce8
+
+COCOAPODS: 1.7.1
