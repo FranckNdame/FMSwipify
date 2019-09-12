@@ -27,3 +27,4 @@ FranckNdame, franck.mpouli@yahoo.com
 ## License
 
 FMSwipify is available under the MIT license. See the LICENSE file for more info.
+# FMSwipify
