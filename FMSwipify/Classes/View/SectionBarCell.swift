@@ -13,7 +13,6 @@ public class SectionBarCell: UICollectionViewCell {
     let titleLabel: UILabel = {
         let title = UILabel()
         title.textAlignment = .center
-        title.font = UIFont.systemFont(ofSize: 14)
         return title
     }()
     
@@ -35,9 +34,6 @@ public class SectionBarCell: UICollectionViewCell {
         didSet { setupSelector() }
     }
     
-    var iconPosition: IconPosition? {
-        didSet {  }
-    }
     
     var barType: SectionBarType? {
         didSet {
@@ -45,6 +41,7 @@ public class SectionBarCell: UICollectionViewCell {
         }
     }
     var selectedColor: UIColor = .black
+    var iconSize: CGSize = .init(width: 25, height: 25)
     var unselectedColor: UIColor = .lightGray
     let stack = UIStackView()
 
@@ -73,16 +70,9 @@ public class SectionBarCell: UICollectionViewCell {
     
     func setupSelector() {
         
-        
-            
             switch selectorType! {
-                
                 case .bar:
                     selector.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, size: CGSize(width: 0, height: 4))
-                
-                case .line:
-                    selector.anchor(top: nil, leading: nil, bottom: bottomAnchor, trailing: nil, size: CGSize(width: 60, height: 4))
-                    selector.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
                 
                 case .bubble:
                     selector.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 8, left: 8, bottom: 8, right: 8), size: .zero)
@@ -90,7 +80,6 @@ public class SectionBarCell: UICollectionViewCell {
                 case .dot:
                     selector.anchor(top: nil, leading: nil, bottom: bottomAnchor, trailing: nil, size: CGSize(width: 6, height: 6))
                     selector.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
-                
             }
         
         
@@ -98,8 +87,8 @@ public class SectionBarCell: UICollectionViewCell {
     
     @available(iOS 9.0, *)
     func setupIcon() {
-        iconImageView.widthAnchor.constraint(equalToConstant: 25).isActive = true
-        iconImageView.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        iconImageView.widthAnchor.constraint(equalToConstant: iconSize.width).isActive = true
+        iconImageView.heightAnchor.constraint(equalToConstant: iconSize.height).isActive = true
         stack.addArrangedSubview(iconImageView)
 
     }

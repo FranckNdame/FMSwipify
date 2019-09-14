@@ -12,11 +12,7 @@ public enum CellSource {
 }
 
 public enum SelectorType {
-    case line, bar, bubble, dot
-}
-
-public enum IconPosition {
-    case left, right
+    case bar, bubble, dot
 }
 
 public enum SectionBarType {
@@ -25,6 +21,7 @@ public enum SectionBarType {
 
 private let reuseidentifier = "contentCell"
 
+@available(iOS 8.2, *)
 open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, SectionBarDelegate, SwipifyCellDelegate {
     
     lazy open var sectionBar: SectionBar = {
@@ -48,8 +45,12 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
     
     //MARK: - Sections
     open var sectionsTitle: [String] { return [] }
+    open var sectionTitleFont: UIFont { return UIFont.systemFont(ofSize: 15, weight: .semibold) }
     open var sectionsIcon: [UIImage] { return [] }
-    open var sectionIconPosition: IconPosition?
+    open var sectionIconSize: CGSize { return .init(width: 25, height: 25) }
+    
+    
+    
     open var sectionsBackgroundColor: UIColor { return .white }
     open var sectionsSelectedColor: UIColor { return .black }
     open var sectionsUnselectedColor: UIColor { return .lightGray }
@@ -60,6 +61,10 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
     
     open var data: [[Y]] {return [[Y]]()}
     
+    // MARK: - TODO
+    // bar fixed type
+    // corner radius
+    
     
 
     override open func viewDidLoad() {
@@ -68,17 +73,19 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
         collectionView.dataSource = self
         collectionView.delegate = self
         sectionBar.titles = sectionsTitle
+        sectionBar.titleFont = sectionTitleFont
         sectionBar.icons = sectionsIcon
+        sectionBar.iconSize = sectionIconSize
         sectionBar.bgColor = sectionsBackgroundColor
         sectionBar.selectedColor = sectionsSelectedColor
         sectionBar.unselectedColor = sectionsUnselectedColor
         sectionBar.selectorType = sectionSelectorType
         sectionBar.selectorColor = sectionsSelectorColor
-        sectionBar.iconPosition = sectionIconPosition
-        sectionBar.barType = sectionBarType
+        
         sectionBar.bar.backgroundColor = sectionsSelectorColor
         sectionBar.dataCount = data.count
         sectionBar.setupSelectedIndex()
+        sectionBar.barType = sectionBarType
         collectionView.showsHorizontalScrollIndicator = false
         
         

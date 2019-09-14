@@ -12,6 +12,7 @@ public protocol SectionBarDelegate: class {
 }
 
 
+@available(iOS 8.2, *)
 public class SectionBar: UIView {
     
     let collectionView: UICollectionView = {
@@ -26,14 +27,17 @@ public class SectionBar: UIView {
     let bar: UIView = {
         let view = UIView()
         view.backgroundColor = .green
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     //MARK: - Sections
     var titles: [String]?
+    var titleFont: UIFont = .systemFont(ofSize: 15, weight: .bold)
     var icons: [UIImage]?
+    var iconSize: CGSize = .init(width: 25, height: 25)
     
-    var iconPosition: IconPosition?
+    
     var selectedColor: UIColor = .black
     var unselectedColor: UIColor = .lightGray
     var selectorColor: UIColor = .black
@@ -98,10 +102,38 @@ public class SectionBar: UIView {
     var leftAnchorCst: NSLayoutConstraint?
     @available(iOS 9.0, *)
     fileprivate func setupHorizontalBar() {
-        bar.anchor(superView: self, bottom: bottomAnchor, size: .init(width: 0, height: 4))
-        leftAnchorCst = bar.leadingAnchor.constraint(equalTo: leadingAnchor)
-        leftAnchorCst?.isActive = true
-        bar.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1/4).isActive = true
+        
+        addSubview(bar)
+        
+        switch selectorType {
+        case .bar:
+            bar.heightAnchor.constraint(equalToConstant: 4).isActive = true
+            bar.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+            leftAnchorCst = bar.leadingAnchor.constraint(equalTo: leadingAnchor)
+            leftAnchorCst?.isActive = true
+            bar.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1/4).isActive = true
+            
+        case .bubble:
+            bar.anchor(top: topAnchor, bottom: bottomAnchor, padding: .init(top: 8, left: 0, bottom: 8, right: 0), size: .zero)
+            bar.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+            leftAnchorCst = bar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8)
+            bar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 8).isActive = true
+            leftAnchorCst?.isActive = true
+            bar.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1/4).isActive = true
+            bar.layer.cornerRadius = 17
+        case .dot:
+            bar.heightAnchor.constraint(equalToConstant: 6).isActive = true
+            bar.widthAnchor.constraint(equalToConstant: 6).isActive = true
+            bar.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -4).isActive = true
+            
+            let x = (UIScreen.main.bounds.width / CGFloat(dataCount)) / 2
+            leftAnchorCst = bar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: x)
+            leftAnchorCst?.isActive = true
+            
+            bar.layer.cornerRadius = 3
+            
+  
+        }
         
     }
     
@@ -109,6 +141,7 @@ public class SectionBar: UIView {
     
 }
 
+@available(iOS 8.2, *)
 extension SectionBar: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -151,12 +184,14 @@ extension SectionBar: UICollectionViewDataSource, UICollectionViewDelegateFlowLa
             if icons?.count == titles?.count || icons?.count ?? 0 > 0 {
                 cell.iconImageView.image = icons![indexPath.item]
                 cell.iconImageView.tintColor = cell.isSelected ? selectedColor : unselectedColor
+                cell.iconSize = self.iconSize
                 cell.setupIcon()
             }
             
             if titles?.count ?? 0 > 0 {
                 cell.titleLabel.text = self.titles![indexPath.item]
                 cell.titleLabel.textColor = cell.isSelected ? selectedColor : unselectedColor
+                cell.titleLabel.font = self.titleFont
                 cell.addLabelToStack()
             }
             

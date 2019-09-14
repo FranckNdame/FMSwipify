@@ -11,8 +11,10 @@ import FMSwipify
 
 class ViewController: SwipifyController<PostCell, Post> {
     
-//    override var sectionsTitle: [String] { return  ["One", "Two", "Three", "four"] }
+    override var sectionsTitle: [String] { return  ["One", "Two", "Three", "four"] }
+    override var sectionTitleFont: UIFont { return .systemFont(ofSize: 15) }
     override var sectionsIcon: [UIImage] { return [#imageLiteral(resourceName: "lifestyle"),#imageLiteral(resourceName: "lifestyle"),#imageLiteral(resourceName: "lifestyle"),#imageLiteral(resourceName: "lifestyle")] }
+    override var sectionIconSize: CGSize { return .init(width: 25, height: 25) }
     override var cellSource: CellSource { return .nib }
     override var cellSize: CGSize { return CGSize(width: collectionView.frame.width, height: 70)}
     override var sectionsBackgroundColor: UIColor { return .red }
@@ -20,7 +22,7 @@ class ViewController: SwipifyController<PostCell, Post> {
     override var sectionsUnselectedColor: UIColor { return .lightGray }
     
     override var sectionsSelectorColor: UIColor { return .white }
-    override var sectionSelectorType: SelectorType { return .line }
+    override var sectionSelectorType: SelectorType { return .bar }
     override var sectionBarType: SectionBarType { return .fixed }
     
 
