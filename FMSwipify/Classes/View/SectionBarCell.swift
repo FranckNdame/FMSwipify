@@ -7,42 +7,62 @@
 
 import UIKit
 
+@available(iOS 9.0, *)
 public class SectionBarCell: UICollectionViewCell {
     
     let titleLabel: UILabel = {
         let title = UILabel()
         title.textAlignment = .center
         title.font = UIFont.systemFont(ofSize: 14)
-        title.alpha = 0.49
-        title.textColor = UIColor.black
-        
         return title
     }()
     
-    let bar: UIView = {
+    let selector: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(white: 1, alpha: 1)
         view.alpha = 0
-        view.layer.cornerRadius = 1.5
+        view.layer.cornerRadius = view.bounds.height / 2
         return view
     }()
     
+    let iconImageView: UIImageView = {
+        let iconIV = UIImageView()
+        iconIV.contentMode = .scaleAspectFit
+        iconIV.clipsToBounds = true
+        return iconIV
+    }()
+    
+    var selectorType: SelectorType? {
+        didSet { setupSelector() }
+    }
+    
+    var iconPosition: IconPosition? {
+        didSet {  }
+    }
+    
+    var barType: SectionBarType? {
+        didSet {
+            selector.isHidden = barType == .fixed
+        }
+    }
+    var selectedColor: UIColor = .black
+    var unselectedColor: UIColor = .lightGray
+    let stack = UIStackView()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        if #available(iOS 9.0, *) {
-            titleLabel.anchor(superView: self, top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor)
-            bar.anchor(superView: self, top: nil, leading: nil, bottom: bottomAnchor, trailing: nil, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), size: CGSize(width: 80, height: 4))
-        }
-        if #available(iOS 9.0, *) {
-            
-        }
+            addSubview(selector)
+            addSubview(stack)
         
-        if #available(iOS 9.0, *) {
-            bar.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
-        } else {
-            // Fallback on earlier versions
-        }
+        
+            stack.axis = .horizontal
+            stack.spacing = 8
+            stack.distribution = .fillProportionally
+            stack.alignment = .center
+            stack.centerInSuperview()
+    
+        
+        
         
     }
     
@@ -51,22 +71,60 @@ public class SectionBarCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setupSelector() {
+        
+        
+            
+            switch selectorType! {
+                
+                case .bar:
+                    selector.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, size: CGSize(width: 0, height: 4))
+                
+                case .line:
+                    selector.anchor(top: nil, leading: nil, bottom: bottomAnchor, trailing: nil, size: CGSize(width: 60, height: 4))
+                    selector.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
+                
+                case .bubble:
+                    selector.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 8, left: 8, bottom: 8, right: 8), size: .zero)
+                
+                case .dot:
+                    selector.anchor(top: nil, leading: nil, bottom: bottomAnchor, trailing: nil, size: CGSize(width: 6, height: 6))
+                    selector.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
+                
+            }
+        
+        
+    }
     
+    @available(iOS 9.0, *)
+    func setupIcon() {
+        iconImageView.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        iconImageView.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        stack.addArrangedSubview(iconImageView)
+
+    }
+
+    
+    func addLabelToStack() {
+        stack.addArrangedSubview(titleLabel)
+    }
     
     override public var isSelected: Bool {
         didSet {
             if isSelected == true {
-                UIView.animate(withDuration: 1) {
-                    self.bar.alpha = 1
+                UIView.animate(withDuration: 0.5) {
+                    self.selector.alpha = 1
                     self.titleLabel.font = UIFont.boldSystemFont(ofSize: 14)
-                    self.titleLabel.alpha = 1
+                    self.titleLabel.textColor = self.selectedColor
+                    self.iconImageView.tintColor = self.selectedColor
                 }
                 
             } else {
-                UIView.animate(withDuration: 0.5) {
-                    self.bar.alpha = 0
+                UIView.animate(withDuration: 0.1) {
+                    self.selector.alpha = 0
                     self.titleLabel.font = UIFont.systemFont(ofSize: 14)
-                    self.titleLabel.alpha = 0.49
+                    self.titleLabel.textColor = self.unselectedColor
+                    self.iconImageView.tintColor = self.unselectedColor
                 }
             }
             

@@ -33,6 +33,10 @@
 		259F52211FA6A50E1F792299 /* Pods-FMSwipify_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FMSwipify_Tests.release.xcconfig"; path = "Target Support Files/Pods-FMSwipify_Tests/Pods-FMSwipify_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		38E5AAD35942CEA1DDF5DE75 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		40317C673E77F93463F1DD77 /* Pods-FMSwipify_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FMSwipify_Example.debug.xcconfig"; path = "Target Support Files/Pods-FMSwipify_Example/Pods-FMSwipify_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		5B87AD84232B7BDE0088EE16 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		5B87AD86232B7BE70088EE16 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		5B87AD88232B7C100088EE16 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		5B87AD8A232B80FD0088EE16 /* FMSwipify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FMSwipify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BEE2796232A7BEB00CF4A9F /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		5BEE2797232A7BEB00CF4A9F /* PostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostCell.xib; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* FMSwipify_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FMSwipify_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,6 +163,10 @@
 		6DEA6233E211381EA2FABF12 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5B87AD8A232B80FD0088EE16 /* FMSwipify.framework */,
+				5B87AD88232B7C100088EE16 /* Foundation.framework */,
+				5B87AD86232B7BE70088EE16 /* CFNetwork.framework */,
+				5B87AD84232B7BDE0088EE16 /* UIKit.framework */,
 				7D98D4466FF624044A65B528 /* Pods_FMSwipify_Example.framework */,
 				6C6F12814D0ADC802D16CA46 /* Pods_FMSwipify_Tests.framework */,
 			);

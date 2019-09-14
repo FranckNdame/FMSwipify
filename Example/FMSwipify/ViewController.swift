@@ -11,20 +11,31 @@ import FMSwipify
 
 class ViewController: SwipifyController<PostCell, Post> {
     
-    override var sectionsTitle: [String] { return  ["One", "Two", "Three"] }
-    
+//    override var sectionsTitle: [String] { return  ["One", "Two", "Three", "four"] }
+    override var sectionsIcon: [UIImage] { return [#imageLiteral(resourceName: "lifestyle"),#imageLiteral(resourceName: "lifestyle"),#imageLiteral(resourceName: "lifestyle"),#imageLiteral(resourceName: "lifestyle")] }
     override var cellSource: CellSource { return .nib }
     override var cellSize: CGSize { return CGSize(width: collectionView.frame.width, height: 70)}
+    override var sectionsBackgroundColor: UIColor { return .red }
+    override var sectionsSelectedColor: UIColor { return .white }
+    override var sectionsUnselectedColor: UIColor { return .lightGray }
+    
+    override var sectionsSelectorColor: UIColor { return .white }
+    override var sectionSelectorType: SelectorType { return .line }
+    override var sectionBarType: SectionBarType { return .fixed }
+    
+
     
     override var data: [[Post]] { return
         [[Post(title: "Hello", subTitle: "World"), Post(title: "HAHA", subTitle: "YOYO"), Post(title: "Test", subTitle: "ing")],
          [Post(title: "My name", subTitle: "is franck")],
-         [Post(title: "123", subTitle: "456"), Post(title: "0976", subTitle: "122")]
+         [Post(title: "123", subTitle: "456"), Post(title: "0976", subTitle: "122")],
+         [Post(title: "My name", subTitle: "is franck")]
         ]
     }
     
     override func didSelectItemAt(section: Int, item: Int) {
-        print(data[section][item])
+//        print(data[section][item])
+
     }
     
 }

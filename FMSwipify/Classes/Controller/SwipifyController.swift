@@ -11,7 +11,20 @@ public enum CellSource {
     case nib, code
 }
 
+public enum SelectorType {
+    case line, bar, bubble, dot
+}
+
+public enum IconPosition {
+    case left, right
+}
+
+public enum SectionBarType {
+    case fixed, dynamic
+}
+
 private let reuseidentifier = "contentCell"
+
 open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, SectionBarDelegate, SwipifyCellDelegate {
     
     lazy open var sectionBar: SectionBar = {
@@ -28,13 +41,23 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.contentInset.top = 5
-        cv.scrollIndicatorInsets.top = 5
         cv.isPagingEnabled = true
         return cv
     }()
     
+    
+    //MARK: - Sections
     open var sectionsTitle: [String] { return [] }
+    open var sectionsIcon: [UIImage] { return [] }
+    open var sectionIconPosition: IconPosition?
+    open var sectionsBackgroundColor: UIColor { return .white }
+    open var sectionsSelectedColor: UIColor { return .black }
+    open var sectionsUnselectedColor: UIColor { return .lightGray }
+    open var sectionsSelectorColor: UIColor { return .black }
+    open var sectionSelectorType: SelectorType { return .bar }
+    open var sectionBarType: SectionBarType { return .fixed }
+    
+    
     open var data: [[Y]] {return [[Y]]()}
     
     
@@ -44,20 +67,34 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
         view.backgroundColor = .white
         collectionView.dataSource = self
         collectionView.delegate = self
-        sectionBar.menuArray = sectionsTitle
+        sectionBar.titles = sectionsTitle
+        sectionBar.icons = sectionsIcon
+        sectionBar.bgColor = sectionsBackgroundColor
+        sectionBar.selectedColor = sectionsSelectedColor
+        sectionBar.unselectedColor = sectionsUnselectedColor
+        sectionBar.selectorType = sectionSelectorType
+        sectionBar.selectorColor = sectionsSelectorColor
+        sectionBar.iconPosition = sectionIconPosition
+        sectionBar.barType = sectionBarType
+        sectionBar.bar.backgroundColor = sectionsSelectorColor
+        sectionBar.dataCount = data.count
+        sectionBar.setupSelectedIndex()
         collectionView.showsHorizontalScrollIndicator = false
+        
         
         collectionView.register(SwipifyCell<Y, T>.self, forCellWithReuseIdentifier: reuseidentifier)
         
         if #available(iOS 11.0, *) {
+            // iPhone X+
             sectionBar.anchor(superView: self.view, top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, size: .init(width: 0, height: 50))
         } else {
-            // Fallback on earlier versions
+            // no Notch
+            if #available(iOS 9.0, *) {
+                sectionBar.anchor(superView: self.view, top: view.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, size: .init(width: 0, height: 50))
+            }
         }
         if #available(iOS 9.0, *) {
             collectionView.anchor(superView: view, top: sectionBar.bottomAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
-        } else {
-            // Fallback on earlier versions
         }
     }
     
@@ -65,7 +102,7 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
     
     //MARK: - UICollectionViewDelegateFlowLayout, UICollectionViewDataSource
     open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sectionBar.menuArray?.count ?? 0
+        return data.count
     }
     
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -93,13 +130,19 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
     
     //MARK: - SectionBarDelegate
     
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if sectionBarType == .fixed {
+            sectionBar.leftAnchorCst?.constant = scrollView.contentOffset.x / CGFloat(data.count)
+        }
+    }
+    
     // Delegate to scroll when user scroll's the menuBar
     open func didSelectMenuOptionAt(indexPath: IndexPath) {
         scrollTo(menuIndex: indexPath.item)
     }
     
     // Scroll to the top of the collection view when you swipe the menuBar
-    func scrollTo(menuIndex index: Int) {
+    private func scrollTo(menuIndex index: Int) {
         let indexPath = IndexPath(item: index, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
