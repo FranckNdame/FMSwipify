@@ -4,7 +4,7 @@
 [![Version](https://img.shields.io/cocoapods/v/FMSwipify.svg?style=flat)](https://cocoapods.org/pods/FMSwipify)
 [![License](https://img.shields.io/cocoapods/l/FMSwipify.svg?style=flat)](https://cocoapods.org/pods/FMSwipify)
 [![Platform](https://img.shields.io/cocoapods/p/FMSwipify.svg?style=flat)](https://cocoapods.org/pods/FMSwipify)
-
+![](FMSwipifyLogo.png)
 ## Overview
 
 ![](dummytube.gif)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![](twtr.gif)
