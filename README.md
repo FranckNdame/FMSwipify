@@ -7,7 +7,8 @@
 
 ## Overview
 
-![](dummytube.gif)          ![](twtr.gif)
+![](dummytube.gif)          
+![](twtr.gif)
 
 ## Usage
 - Controller
