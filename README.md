@@ -7,7 +7,7 @@
 
 ## Overview
 
-![](dummytube.gif)
+![](dummytube.gif | height=100)
 ![](ptrst.gif)
 
 ## Usage
