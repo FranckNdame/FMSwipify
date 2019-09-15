@@ -7,8 +7,9 @@
 
 ## Overview
 
-![](dummytube.gif)          
-![](twtr.gif)
+![](dummytube.gif) &nbsp ![](twtr.gif)
+
+<img src="twtr.gif" alt="Kitten" />
 
 ## Usage
 - Controller
