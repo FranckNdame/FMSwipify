@@ -45,6 +45,10 @@ class SwipifyCell<U, T:SwipifyBaseCell<U>>: UICollectionViewCell, UICollectionVi
         }
     }
     
+    override func prepareForReuse() {
+        innerCollectionView.reloadData()
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

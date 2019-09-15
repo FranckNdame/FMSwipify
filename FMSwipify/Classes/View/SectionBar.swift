@@ -21,6 +21,7 @@ public class SectionBar: UIView {
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.backgroundColor = .clear
         return cv
     }()
     
@@ -41,21 +42,22 @@ public class SectionBar: UIView {
     var selectedColor: UIColor = .black
     var unselectedColor: UIColor = .lightGray
     var selectorColor: UIColor = .black
-    var selectorType: SelectorType = .bar
+//    var selectorType: SelectorType = .bar
     var dataCount: Int = 0
     
     var bgColor: UIColor! {
         didSet {
-            collectionView.backgroundColor = bgColor
+            backgroundColor = bgColor
         }
     }
     
-    var barType: SectionBarType? {
+    var selectorType: SelectorType? {
         didSet {
+            
             if #available(iOS 9.0, *) {
-                if barType == .fixed { setupHorizontalBar() 
+                setupHorizontalBar()
             }
-            }
+            
         }
     }
     
@@ -66,15 +68,14 @@ public class SectionBar: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        addSubview(bar)
         collectionView.isPagingEnabled = false
         if #available(iOS 9.0, *) {
             setupCollectionView()
-            
         }
-        
-        
     }
+
+    
     
     
     required init?(coder aDecoder: NSCoder) {
@@ -100,39 +101,62 @@ public class SectionBar: UIView {
     }
     
     var leftAnchorCst: NSLayoutConstraint?
+    var widthAnchorCst: NSLayoutConstraint?
     @available(iOS 9.0, *)
     fileprivate func setupHorizontalBar() {
+        layoutSubviews()
+        let x: CGFloat = CGFloat(dataCount)
         
-        addSubview(bar)
         
-        switch selectorType {
+        switch selectorType! {
         case .bar:
             bar.heightAnchor.constraint(equalToConstant: 4).isActive = true
             bar.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
             leftAnchorCst = bar.leadingAnchor.constraint(equalTo: leadingAnchor)
             leftAnchorCst?.isActive = true
-            bar.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1/4).isActive = true
+            
+            if titles!.count > 0 {
+                let size: CGSize = titles![0].size(withAttributes: [NSAttributedString.Key.font: titleFont])
+                var cvWidth = collectionView.frame.width
+                titles!.forEach {
+                    let size: CGSize = $0.size(withAttributes: [NSAttributedString.Key.font: titleFont])
+                    cvWidth -= size.width
+                }
+                
+                let width = size.width + (cvWidth/x)
+                widthAnchorCst = bar.widthAnchor.constraint(equalToConstant: width)
+            } else {
+                widthAnchorCst = bar.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1 / (x > 4 ? 4 : x))
+            }
+            
+            widthAnchorCst?.isActive = true
+            
             
         case .bubble:
+//            layoutSubviews()
             bar.anchor(top: topAnchor, bottom: bottomAnchor, padding: .init(top: 8, left: 0, bottom: 8, right: 0), size: .zero)
             bar.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
             leftAnchorCst = bar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8)
-            bar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 8).isActive = true
             leftAnchorCst?.isActive = true
-            bar.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1/4).isActive = true
+            
+            if titles!.count > 0 {
+                let size: CGSize = titles![0].size(withAttributes: [NSAttributedString.Key.font: titleFont])
+                var cvWidth = collectionView.frame.width
+                titles!.forEach {
+                    let size: CGSize = $0.size(withAttributes: [NSAttributedString.Key.font: titleFont])
+                    cvWidth -= size.width
+                }
+                
+                let width = size.width + (cvWidth/x)
+                widthAnchorCst = bar.widthAnchor.constraint(equalToConstant: width - 16)
+            } else {
+                let width = collectionView.frame.width * (1 / (x > 4 ? 4 : x))
+                widthAnchorCst = bar.widthAnchor.constraint(equalToConstant: width - 16)
+            }
             bar.layer.cornerRadius = 17
-        case .dot:
-            bar.heightAnchor.constraint(equalToConstant: 6).isActive = true
-            bar.widthAnchor.constraint(equalToConstant: 6).isActive = true
-            bar.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -4).isActive = true
+            widthAnchorCst?.isActive = true
+
             
-            let x = (UIScreen.main.bounds.width / CGFloat(dataCount)) / 2
-            leftAnchorCst = bar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: x)
-            leftAnchorCst?.isActive = true
-            
-            bar.layer.cornerRadius = 3
-            
-  
         }
         
     }
@@ -146,20 +170,30 @@ extension SectionBar: UICollectionViewDataSource, UICollectionViewDelegateFlowLa
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height = collectionView.frame.height
+        let maxX: CGFloat = 4
         
-        if barType == .fixed {
+        switch titles!.count {
+        case 0:
             let x: CGFloat = CGFloat(dataCount)
-            let width = (collectionView.frame.width / x)
+            let width = (collectionView.frame.width / (x > maxX ? maxX : x))
             return CGSize(width: width, height: height)
-        } else {
-            let maxX: CGFloat = 3
+        case 1...4:
+            var cvWidth = collectionView.frame.width
+            let size: CGSize = titles![indexPath.row].size(withAttributes: [NSAttributedString.Key.font: titleFont])
+            titles!.forEach {
+                let size: CGSize = $0.size(withAttributes: [NSAttributedString.Key.font: titleFont])
+                cvWidth -= size.width
+            }
+            
             let x: CGFloat = CGFloat(dataCount)
-            let width = (collectionView.frame.width / (x > maxX ? maxX : x)) - 2
+            let width = size.width + (cvWidth/x)
             return CGSize(width: width, height: height)
+            
+        default:
+            let size: CGSize = titles![indexPath.row].size(withAttributes: [NSAttributedString.Key.font: titleFont])
+            return CGSize(width: size.width + 32, height: height)
         }
-        
-        
-        
+
     }
     
     
@@ -177,23 +211,22 @@ extension SectionBar: UICollectionViewDataSource, UICollectionViewDelegateFlowLa
             
             cell.selectedColor = self.selectedColor
             cell.unselectedColor = self.unselectedColor
-            cell.selector.backgroundColor = self.selectorColor
-            cell.selectorType = self.selectorType
-            cell.barType = self.barType
-            
-            if icons?.count == titles?.count || icons?.count ?? 0 > 0 {
-                cell.iconImageView.image = icons![indexPath.item]
-                cell.iconImageView.tintColor = cell.isSelected ? selectedColor : unselectedColor
-                cell.iconSize = self.iconSize
-                cell.setupIcon()
+            if let icons = icons, let titles = titles {
+                if icons.count > 0 {
+                    cell.iconImageView.image = icons[indexPath.item]
+                    cell.iconImageView.tintColor = cell.isSelected ? selectedColor : unselectedColor
+                    cell.iconSize = self.iconSize
+                    cell.setupIcon()
+                }
+                
+                if titles.count > 0 {
+                    cell.titleLabel.text = titles[indexPath.item]
+                    cell.titleLabel.textColor = cell.isSelected ? selectedColor : unselectedColor
+                    cell.titleLabel.font = self.titleFont
+                    cell.addLabelToStack()
+                }
             }
             
-            if titles?.count ?? 0 > 0 {
-                cell.titleLabel.text = self.titles![indexPath.item]
-                cell.titleLabel.textColor = cell.isSelected ? selectedColor : unselectedColor
-                cell.titleLabel.font = self.titleFont
-                cell.addLabelToStack()
-            }
             
             
             return cell
@@ -210,14 +243,106 @@ extension SectionBar: UICollectionViewDataSource, UICollectionViewDelegateFlowLa
         if #available(iOS 10.0, *) {
             let impact = UIImpactFeedbackGenerator()
             impact.impactOccurred()
-        } else {
-            // Fallback on earlier versions
+        }
+        self.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+        
+        switch titles!.count {
+            case 0: iconScrollTo(indexPath)
+            case 1...4: scrollTo(indexPath)
+            default: dynamicScrollTo(indexPath)
         }
         
-        collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
         delegate?.didSelectMenuOptionAt(indexPath: indexPath)
-    
         
+        
+    }
+    
+    func iconScrollTo(_ indexPath: IndexPath) {
+        
+        if dataCount <= 4 {
+            let cell = collectionView.cellForItem(at: indexPath)
+            let cellFrameInSuperview = collectionView.convert(cell!.frame, to: collectionView.superview)
+            leftAnchorCst?.constant = cellFrameInSuperview.origin.x + (selectorType! == .bubble ? 8 : 0)
+            UIView.animate(withDuration: 0.65, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                self.layoutIfNeeded()
+            }, completion: nil)
+
+        } else {
+            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+                self.widthAnchorCst?.constant += 1
+                
+                self.layoutIfNeeded()
+                
+            }, completion: { (_) in
+                
+                
+                let cell = self.collectionView.cellForItem(at: indexPath)
+                let cellFrameInSuperview = self.collectionView.convert(cell!.frame, to: self.collectionView.superview)
+                self.leftAnchorCst?.constant = cellFrameInSuperview.origin.x + (self.selectorType! == .bubble ? 8 : 0)
+                
+                UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                    self.widthAnchorCst?.constant -= 1
+                    self.layoutIfNeeded()
+                }, completion: nil)
+            })
+
+        }
+        
+        
+        
+        
+        
+    }
+    
+    func scrollTo(_ indexPath: IndexPath) {
+        guard let titles = titles else { return }
+        guard titles.count > 0 else { return }
+        let size: CGSize = titles[indexPath.row].size(withAttributes: [NSAttributedString.Key.font: titleFont])
+        var cvWidth = collectionView.frame.width
+        titles.forEach {
+            let size: CGSize = $0.size(withAttributes: [NSAttributedString.Key.font: titleFont])
+            cvWidth -= size.width
+        }
+        
+        let x: CGFloat = CGFloat(dataCount)
+        let width = size.width + (cvWidth/x)
+        let cell = collectionView.cellForItem(at: indexPath)
+        let cellFrameInSuperview = collectionView.convert(cell!.frame, to: collectionView.superview)
+        widthAnchorCst?.constant = width - (self.selectorType! == .bubble ? 16 : 0)
+        leftAnchorCst?.constant = cellFrameInSuperview.origin.x + (self.selectorType! == .bubble ? 8 : 0)
+        
+        
+        UIView.animate(withDuration: 0.65, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    func dynamicScrollTo(_ indexPath: IndexPath) {
+        
+        let size: CGSize = titles![indexPath.row].size(withAttributes: [NSAttributedString.Key.font: titleFont])
+        var cvWidth = collectionView.frame.width
+        titles!.forEach {
+            let size: CGSize = $0.size(withAttributes: [NSAttributedString.Key.font: titleFont])
+            cvWidth -= size.width
+        }
+        
+        let x: CGFloat = CGFloat(dataCount)
+        
+        UIView.animate(withDuration: 0.25, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+            self.widthAnchorCst?.constant = size.width + 32 - (self.selectorType! == .bubble ? 16 : 0)
+            self.layoutIfNeeded()
+            
+        }, completion: { (_) in
+            
+            
+            let cell = self.collectionView.cellForItem(at: indexPath)
+            let cellFrameInSuperview = self.collectionView.convert(cell!.frame, to: self.collectionView.superview)
+            self.leftAnchorCst?.constant = cellFrameInSuperview.origin.x + (self.selectorType! == .bubble ? 8 : 0)
+            
+            UIView.animate(withDuration: 0.65, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                self.layoutIfNeeded()
+            }, completion: nil)
+        })
     }
     
     

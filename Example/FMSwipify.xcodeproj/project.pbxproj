@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B0FBF0D232EA48600447495 /* TwitrController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0FBF0C232EA48600447495 /* TwitrController.swift */; };
+		5B0FBF0F232EA98000447495 /* PtrestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0FBF0E232EA98000447495 /* PtrestController.swift */; };
+		5B8DC489232E707C00B2EF9F /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8DC488232E707C00B2EF9F /* DataStore.swift */; };
 		5BEE2798232A7BEB00CF4A9F /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEE2796232A7BEB00CF4A9F /* PostCell.swift */; };
 		5BEE2799232A7BEB00CF4A9F /* PostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BEE2797232A7BEB00CF4A9F /* PostCell.xib */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
@@ -33,10 +36,13 @@
 		259F52211FA6A50E1F792299 /* Pods-FMSwipify_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FMSwipify_Tests.release.xcconfig"; path = "Target Support Files/Pods-FMSwipify_Tests/Pods-FMSwipify_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		38E5AAD35942CEA1DDF5DE75 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		40317C673E77F93463F1DD77 /* Pods-FMSwipify_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FMSwipify_Example.debug.xcconfig"; path = "Target Support Files/Pods-FMSwipify_Example/Pods-FMSwipify_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		5B0FBF0C232EA48600447495 /* TwitrController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitrController.swift; sourceTree = "<group>"; };
+		5B0FBF0E232EA98000447495 /* PtrestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PtrestController.swift; sourceTree = "<group>"; };
 		5B87AD84232B7BDE0088EE16 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5B87AD86232B7BE70088EE16 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		5B87AD88232B7C100088EE16 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5B87AD8A232B80FD0088EE16 /* FMSwipify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FMSwipify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B8DC488232E707C00B2EF9F /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		5BEE2796232A7BEB00CF4A9F /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		5BEE2797232A7BEB00CF4A9F /* PostCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostCell.xib; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* FMSwipify_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FMSwipify_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,13 +108,16 @@
 			isa = PBXGroup;
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
+				5B0FBF0C232EA48600447495 /* TwitrController.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				5B0FBF0E232EA98000447495 /* PtrestController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 				5BEE2796232A7BEB00CF4A9F /* PostCell.swift */,
 				5BEE2797232A7BEB00CF4A9F /* PostCell.xib */,
+				5B8DC488232E707C00B2EF9F /* DataStore.swift */,
 			);
 			name = "Example for FMSwipify";
 			path = FMSwipify;
@@ -348,6 +357,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				5B0FBF0F232EA98000447495 /* PtrestController.swift in Sources */,
+				5B0FBF0D232EA48600447495 /* TwitrController.swift in Sources */,
+				5B8DC489232E707C00B2EF9F /* DataStore.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				5BEE2798232A7BEB00CF4A9F /* PostCell.swift in Sources */,
 			);

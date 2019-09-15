@@ -12,12 +12,49 @@ public enum CellSource {
 }
 
 public enum SelectorType {
-    case bar, bubble, dot
+    case bar, bubble
 }
 
-public enum SectionBarType {
-    case fixed, dynamic
+public struct Config {
+    
+    public var sectionsTitle: [String]
+    public var sectionTitleFont: UIFont
+    public var sectionsIcon: [UIImage]
+    public var sectionIconSize: CGSize
+    
+    public var sectionsBackgroundColor: UIColor
+    public var sectionsSelectedColor: UIColor
+    public var sectionsUnselectedColor: UIColor
+    public var sectionsSelectorColor: UIColor
+    public var sectionSelectorType: SelectorType
+    
+    @available(iOS 8.2, *)
+    public init(sectionsTitle: [String] = [],
+                sectionTitleFont: UIFont = UIFont.systemFont(ofSize: 15, weight: .regular) ,
+                sectionsIcon: [UIImage] = [],
+                sectionIconSize: CGSize = .init(width: 30, height: 30),
+                
+                sectionsBackgroundColor: UIColor = .white,
+                sectionsSelectedColor: UIColor = .black,
+                sectionsUnselectedColor: UIColor = .lightGray,
+                sectionsSelectorColor: UIColor = .black,
+                
+                sectionSelectorType: SelectorType = .bar) {
+        
+        self.sectionsTitle = sectionsTitle
+        self.sectionTitleFont = sectionTitleFont
+        self.sectionsIcon = sectionsIcon
+        self.sectionIconSize = sectionIconSize
+        
+        self.sectionsBackgroundColor = sectionsBackgroundColor
+        self.sectionsSelectedColor = sectionsSelectedColor
+        self.sectionsUnselectedColor = sectionsUnselectedColor
+        self.sectionsSelectorColor = sectionsSelectorColor
+        self.sectionSelectorType = sectionSelectorType
+    }
 }
+
+
 
 private let reuseidentifier = "contentCell"
 
@@ -39,31 +76,20 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
         layout.minimumLineSpacing = 0
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.isPagingEnabled = true
+        cv.backgroundColor = .clear
         return cv
     }()
     
-    
-    //MARK: - Sections
-    open var sectionsTitle: [String] { return [] }
-    open var sectionTitleFont: UIFont { return UIFont.systemFont(ofSize: 15, weight: .semibold) }
-    open var sectionsIcon: [UIImage] { return [] }
-    open var sectionIconSize: CGSize { return .init(width: 25, height: 25) }
-    
-    
-    
-    open var sectionsBackgroundColor: UIColor { return .white }
-    open var sectionsSelectedColor: UIColor { return .black }
-    open var sectionsUnselectedColor: UIColor { return .lightGray }
-    open var sectionsSelectorColor: UIColor { return .black }
-    open var sectionSelectorType: SelectorType { return .bar }
-    open var sectionBarType: SectionBarType { return .fixed }
-    
-    
+
     open var data: [[Y]] {return [[Y]]()}
     
     // MARK: - TODO
-    // bar fixed type
-    // corner radius
+    private var config = Config()
+    
+    public func setConfig(_ config: Config) {
+        self.config = config
+        pathConfig()
+    }
     
     
 
@@ -72,23 +98,22 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
         view.backgroundColor = .white
         collectionView.dataSource = self
         collectionView.delegate = self
-        sectionBar.titles = sectionsTitle
-        sectionBar.titleFont = sectionTitleFont
-        sectionBar.icons = sectionsIcon
-        sectionBar.iconSize = sectionIconSize
-        sectionBar.bgColor = sectionsBackgroundColor
-        sectionBar.selectedColor = sectionsSelectedColor
-        sectionBar.unselectedColor = sectionsUnselectedColor
-        sectionBar.selectorType = sectionSelectorType
-        sectionBar.selectorColor = sectionsSelectorColor
-        
-        sectionBar.bar.backgroundColor = sectionsSelectorColor
+    }
+    
+    private func pathConfig() {
+        sectionBar.titles = config.sectionsTitle
+        sectionBar.titleFont = config.sectionTitleFont
+        sectionBar.icons = config.sectionsIcon
+        sectionBar.iconSize = config.sectionIconSize
+        sectionBar.bgColor = config.sectionsBackgroundColor
+        sectionBar.selectedColor = config.sectionsSelectedColor
+        sectionBar.unselectedColor = config.sectionsUnselectedColor
+        sectionBar.selectorColor = config.sectionsSelectorColor
+        sectionBar.bar.backgroundColor = config.sectionsSelectorColor
         sectionBar.dataCount = data.count
         sectionBar.setupSelectedIndex()
-        sectionBar.barType = sectionBarType
+        
         collectionView.showsHorizontalScrollIndicator = false
-        
-        
         collectionView.register(SwipifyCell<Y, T>.self, forCellWithReuseIdentifier: reuseidentifier)
         
         if #available(iOS 11.0, *) {
@@ -103,6 +128,8 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
         if #available(iOS 9.0, *) {
             collectionView.anchor(superView: view, top: sectionBar.bottomAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
         }
+        
+        sectionBar.selectorType = config.sectionSelectorType
     }
     
     
@@ -138,9 +165,7 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
     //MARK: - SectionBarDelegate
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if sectionBarType == .fixed {
-            sectionBar.leftAnchorCst?.constant = scrollView.contentOffset.x / CGFloat(data.count)
-        }
+
     }
     
     // Delegate to scroll when user scroll's the menuBar
@@ -157,12 +182,19 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
     open func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let index = Int(targetContentOffset.pointee.x / view.frame.width)
         let indexPath = IndexPath(item: index, section: 0)
+        switch config.sectionsTitle.count {
+        case 0: sectionBar.iconScrollTo(indexPath)
+        case 1...4: sectionBar.scrollTo(indexPath)
+        default: sectionBar.dynamicScrollTo(indexPath)
+        }
         
         sectionBar.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
         if #available(iOS 10.0, *) {
             let impact = UIImpactFeedbackGenerator()
             impact.impactOccurred()
         }
+        
+//        SlideController is a simple and flexible UI component fully written in Swift. Built using power of generic types, it is a nice alternative to UIPageViewController.
         
         
         

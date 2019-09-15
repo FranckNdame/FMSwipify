@@ -5,36 +5,39 @@
 [![License](https://img.shields.io/cocoapods/l/FMSwipify.svg?style=flat)](https://cocoapods.org/pods/FMSwipify)
 [![Platform](https://img.shields.io/cocoapods/p/FMSwipify.svg?style=flat)](https://cocoapods.org/pods/FMSwipify)
 
-## Example
+## Overview
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+![](dummytube.gif)
+![](ptrst.gif)
 
 ## Usage
 - Controller
 
 ```swift
+import UIKit
 import FMSwipify
 
 class ViewController: SwipifyController<YourCell, YourModel> {
 
-    override var sectionsTitle: [String] { return  ["One", "Two", "Three"] }
-
-    // .nib or .code
     override var cellSource: CellSource { return .nib }
-    override var cellSize: CGSize { return CGSize(width: collectionView.frame.width, height: 70)}
+    override var cellSize: CGSize { return CGSize(width: collectionView.frame.width, height: 350)}
+    override var data: [[Post]] { return DataStore.store.posts }
 
-    override var data: [[YourModel]] { return
-        [[YourModel(title: "Hello", subTitle: "World"), YourModel(title: "HAHA", subTitle: "YOYO"), YourModel(title: "Test", subTitle: "ing")],
-        [YourModel(title: "My name", subTitle: "is franck")],
-        [YourModel(title: "123", subTitle: "456"), YourModel(title: "0976", subTitle: "122")]
-        ]
+    let config = Config(
+        sectionTitleFont: .systemFont(ofSize: 16, weight: .medium),
+        sectionsIcon: DataStore.store.icons,
+        sectionIconSize: .init(width: 30, height: 30),
+        sectionsBackgroundColor: .red,
+        sectionsSelectedColor: .white,
+        sectionsUnselectedColor: UIColor(white: 0, alpha: 0.6),
+        sectionsSelectorColor: .white,
+        sectionSelectorType: .bar
+    )
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setConfig(config)
     }
-
-    // Prints the selected item
-    override func didSelectItemAt(section: Int, item: Int) {
-        print(data[section][item])
-        }
-
 }
 ```
 - Cell
@@ -46,8 +49,6 @@ class YourCell: SwipifyBaseCell<YourModel> {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subTitleLabel: UILabel!
-
-
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -62,7 +63,7 @@ class YourCell: SwipifyBaseCell<YourModel> {
 
 - Model
 ```swift
-struct Your Model {
+struct YourModel {
     let title: String
     let subTitle: String
 }
@@ -86,6 +87,9 @@ FranckNdame, franck.mpouli@yahoo.com
 
 ## Contributing
 Forks, patches and other feedback are welcome.
+
+## Development
+This library is still in early development, more features and ideas are currently being engineered.
 
 ## License
 
