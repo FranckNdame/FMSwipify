@@ -1,5 +1,5 @@
 # FMSwipify
-![](FMSwipifyLogo.png)
+![](logo.png)
 [![CI Status](https://img.shields.io/travis/FranckNdame/FMSwipify.svg?style=flat)](https://travis-ci.org/FranckNdame/FMSwipify)
 [![Version](https://img.shields.io/cocoapods/v/FMSwipify.svg?style=flat)](https://cocoapods.org/pods/FMSwipify)
 [![License](https://img.shields.io/cocoapods/l/FMSwipify.svg?style=flat)](https://cocoapods.org/pods/FMSwipify)
