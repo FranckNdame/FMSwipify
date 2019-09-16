@@ -75,17 +75,17 @@ struct YourModel {
 
 | Attribute        | Description           | Default value  |
 | --------------- |--------------------| ----------------|
-| *sectionsTitle* | Sets the title of each section | empty |
-| *sectionTitleFont* | Sets the font your section title |   systemFont(ofSize: 15, weight: .regular) |
-| *sectionsIcon*  | Sets the icon of each section | empty |
-| *sectionIconSize* | Sets the size of your section icon | CGSize(width: 30, height: 30) |
-| *sectionsBackgroundColor* | Sets the background of the section banner | .white |
-| *sectionsSelectedColor* | Sets color of the section's selected state |   .black |
-| *sectionsUnselectedColor*  | Sets color of the section's unselected state | .lightGray |
-| *sectionsSelectorColor* | Sets the color of the selector | .black |
-| *sectionSelectorType* | Specifies whether the selector is a bar or bubble | .bar |
-| *cellSource* | Specifies whether the cell comes from nib or code  | .nib |
-| * *cellSize* | Sets the size of your cell | .zero |
+| **sectionsTitle** | Sets the title of each section | `empty` |
+| **sectionTitleFont** | Sets the font your section title |   `systemFont(ofSize: 15, weight: .regular)` |
+| **sectionsIcon**  | Sets the icon of each section | `empty` |
+| **sectionIconSize** | Sets the size of your section icon | `CGSize(width: 30, height: 30)` |
+| **sectionsBackgroundColor** | Sets the background of the section banner | `.white` |
+| **sectionsSelectedColor** | Sets color of the section's selected state |   `.black` |
+| **sectionsUnselectedColor**  | Sets color of the section's unselected state | `.lightGray` |
+| **sectionsSelectorColor** | Sets the color of the selector | `.black` |
+| **sectionSelectorType** | Specifies whether the selector is a bar or bubble | `.bar` |
+| **cellSource** | Specifies whether the cell comes from nib or code  | `.nib` |
+| * **cellSize** | Sets the size of your cell | `.zero` |
 
 
 
