@@ -34,7 +34,7 @@ class PtrestController: SwipifyController<PostCell, Post> {
         purpleView.anchor(superView: self.view, top: view.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, size: CGSize(width: 0, height: 100))
         setConfig(config)
         sectionDefaultTopConstraint?.isActive = false
-        sectionBar.topAnchor.constraint(equalTo: purpleView.bottomAnchor, constant: 0).isActive = true
+        sectionBar.topAnchor.constraint(equalTo: purpleView.bottomAnchor, constant: -50).isActive = true
         
     }
 }

@@ -101,11 +101,12 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
         view.backgroundColor = .white
         collectionView.dataSource = self
         collectionView.delegate = self
-        view.addSubview(sectionBar)
-        view.addSubview(collectionView)
+        
     }
     
     private func pathConfig() {
+        view.addSubview(sectionBar)
+        view.addSubview(collectionView)
         sectionBar.titles = config.sectionsTitle
         sectionBar.titleFont = config.sectionTitleFont
         sectionBar.icons = config.sectionsIcon
