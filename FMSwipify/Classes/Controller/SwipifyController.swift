@@ -68,6 +68,7 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
     }()
     
     open var cellSource: CellSource { return .nib }
+    open var cellAgain: CellSource { return .nib }
     open var cellSize: CGSize { return .zero }
     public let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -91,6 +92,8 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
         pathConfig()
     }
     
+    open var sectionDefaultTopConstraint: NSLayoutConstraint?
+    
     
 
     override open func viewDidLoad() {
@@ -98,6 +101,8 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
         view.backgroundColor = .white
         collectionView.dataSource = self
         collectionView.delegate = self
+        view.addSubview(sectionBar)
+        view.addSubview(collectionView)
     }
     
     private func pathConfig() {
@@ -118,11 +123,15 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
         
         if #available(iOS 11.0, *) {
             // iPhone X+
-            sectionBar.anchor(superView: self.view, top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, size: .init(width: 0, height: 50))
+            sectionBar.anchor(leading: view.leadingAnchor, trailing: view.trailingAnchor, size: .init(width: 0, height: 50))
+            sectionDefaultTopConstraint = sectionBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0)
+            sectionDefaultTopConstraint?.isActive = true
         } else {
             // no Notch
             if #available(iOS 9.0, *) {
-                sectionBar.anchor(superView: self.view, top: view.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, size: .init(width: 0, height: 50))
+                sectionBar.anchor(leading: view.leadingAnchor, trailing: view.trailingAnchor, size: .init(width: 0, height: 50))
+                 sectionDefaultTopConstraint = sectionBar.topAnchor.constraint(equalTo: view.topAnchor, constant: 0)
+                 sectionDefaultTopConstraint?.isActive = true
             }
         }
         if #available(iOS 9.0, *) {

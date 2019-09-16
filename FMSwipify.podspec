@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'FMSwipify'
-  s.version          = '0.2.3'
+  s.version          = '0.2.4'
   s.summary          = 'A framework that is meant to make your life easier when working with nested Collection Views'
 
 # This description is used to generate tags and improve search results.

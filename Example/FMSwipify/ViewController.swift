@@ -15,6 +15,10 @@ class ViewController: SwipifyController<PostCell, Post> {
     override var cellSize: CGSize { return CGSize(width: collectionView.frame.width, height: 350)}
     override var data: [[Post]] { return DataStore.store.posts }
     
+    
+    
+    
+    
     let config = Config(
         sectionTitleFont: .systemFont(ofSize: 16, weight: .medium),
         sectionsIcon: DataStore.store.icons,
@@ -27,12 +31,13 @@ class ViewController: SwipifyController<PostCell, Post> {
     )
 
 
-   
+//   topAnchorCst
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = .clear
         setConfig(config)
+        
         
     }
     

@@ -13,6 +13,8 @@ class PtrestController: SwipifyController<PostCell, Post> {
     override var cellSize: CGSize { return CGSize(width: collectionView.frame.width, height: 350)}
     override var data: [[Post]] { return DataStore.store.ptrstposts }
     
+
+    
     let config = Config(
         sectionsTitle: ["All", "Trending", "Art", "Food", "Home", "Men's style", "DIY", "Travel", " Humour", "Eductation"],
         sectionTitleFont: .systemFont(ofSize: 13, weight: .bold),
@@ -27,7 +29,12 @@ class PtrestController: SwipifyController<PostCell, Post> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let purpleView = UIView()
+        purpleView.backgroundColor = .purple
+        purpleView.anchor(superView: self.view, top: view.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, size: CGSize(width: 0, height: 100))
         setConfig(config)
+        sectionDefaultTopConstraint?.isActive = false
+        sectionBar.topAnchor.constraint(equalTo: purpleView.bottomAnchor, constant: 0).isActive = true
         
     }
 }
