@@ -70,6 +70,16 @@ struct YourModel {
 }
 ```
 
+## Configuration API
+`*` -- Must be defined
+| Attribute        | Description           | Default value  |
+| --------------- |:--------------------:| ----------------:|
+| sectionsTitle | Sets the title of each section      | empty             |
+| sectionTitleFont           | Sets the font your section title              |   systemFont(ofSize: 15, weight: .regular)              |
+| sectionsIcon  | Sets the icon of each section                 |    empty                |
+| sectionIconSize  | Sets the size of your section icon              |    CGSize(width: 30, height: 30)               |
+
+
 
 ## Requirements
 Swift 4.0+ and iOS 9.0+ 
