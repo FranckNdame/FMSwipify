@@ -100,9 +100,10 @@ it, simply add the following line to your Podfile:
 pod 'FMSwipify'
 ```
 
-## Author
+## Authors
 
 FranckNdame, franck.mpouli@yahoo.com
+Ahmad Karkouti, ahmad_karkouty@hotmail.com
 
 ## Contributing
 Forks, patches and other feedback are welcome.
