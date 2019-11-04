@@ -28,6 +28,9 @@ public struct Config {
     public var sectionsSelectorColor: UIColor
     public var sectionSelectorType: SelectorType
     
+    public var placeholderImage: UIImage
+    public var placeholderAttributes: NSAttributedString
+    
     @available(iOS 8.2, *)
     public init(sectionsTitle: [String] = [],
                 sectionTitleFont: UIFont = UIFont.systemFont(ofSize: 15, weight: .regular) ,
@@ -39,7 +42,10 @@ public struct Config {
                 sectionsUnselectedColor: UIColor = .lightGray,
                 sectionsSelectorColor: UIColor = .black,
                 
-                sectionSelectorType: SelectorType = .bar) {
+                sectionSelectorType: SelectorType = .bar,
+                placeholderImage: UIImage = UIImage(),
+                placeholderAttributes: NSAttributedString = NSAttributedString()
+    ) {
         
         self.sectionsTitle = sectionsTitle
         self.sectionTitleFont = sectionTitleFont
@@ -51,6 +57,10 @@ public struct Config {
         self.sectionsUnselectedColor = sectionsUnselectedColor
         self.sectionsSelectorColor = sectionsSelectorColor
         self.sectionSelectorType = sectionSelectorType
+        
+        self.placeholderImage = placeholderImage
+        self.placeholderAttributes = placeholderAttributes
+        
     }
 }
 
@@ -159,6 +169,8 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
         cell.cellSize = cellSize
         cell.section = indexPath.item
         cell.delegate = self
+        cell.placeholderImage = config.placeholderImage
+        cell.placeholderAttributes = config.placeholderAttributes
         return cell
     }
     

@@ -7,6 +7,7 @@
 
 import UIKit
 
+let placeholderIdentifier = "placeholder-cell"
 public protocol SwipifyCellDelegate: class {
     func didSelectItemAt(section: Int, item: Int)
 }
@@ -16,6 +17,10 @@ class SwipifyCell<U, T:SwipifyBaseCell<U>>: UICollectionViewCell, UICollectionVi
     var cellSource: CellSource = .nib
     var cellSize: CGSize = .zero
     var section = 0
+    
+    // Placeholder
+    var placeholderAttributes: NSAttributedString = NSAttributedString()
+    var placeholderImage: UIImage = UIImage()
     
     weak var delegate: SwipifyCellDelegate?
     
@@ -43,6 +48,10 @@ class SwipifyCell<U, T:SwipifyBaseCell<U>>: UICollectionViewCell, UICollectionVi
         } else {
             innerCollectionView.register(UINib(nibName: "\(T.self)", bundle: nil), forCellWithReuseIdentifier: reuseidentifier)
         }
+        
+        if #available(iOS 9.0, *) {
+            innerCollectionView.register(PlaceholderCell.self, forCellWithReuseIdentifier: placeholderIdentifier)
+        }
     }
     
     override func prepareForReuse() {
@@ -57,18 +66,29 @@ class SwipifyCell<U, T:SwipifyBaseCell<U>>: UICollectionViewCell, UICollectionVi
     //MARK:- UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseidentifier, for: indexPath) as! T
-        cell.item = items[indexPath.item]
-        return cell
-        
+        if items.count == 0 {
+            if #available(iOS 9.0, *) {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: placeholderIdentifier, for: indexPath) as! PlaceholderCell
+                let content = Content(image: placeholderImage, attributes: placeholderAttributes )
+                cell.content = content
+                return cell
+            } else {
+                return UICollectionViewCell()
+            }
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseidentifier, for: indexPath) as! T
+            cell.item = items[indexPath.item]
+            return cell
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items.count
+        return items.count == 0 ? 1 : items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return cellSize
+        return items.count == 0 ? collectionView.frame.size : cellSize
+    
     }
     
     
