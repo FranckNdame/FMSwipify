@@ -21,9 +21,7 @@ struct DataStore {
         
         
         
-        [Post(preview: "p4", acountImageStr: "cov4", title: "NOISEY Bompton: Growing up with Kendrick Lamar", subTitle: "Noisey • 2.1M views • 1 year ago"),
-         Post(preview: "p6", acountImageStr: "cov5", title: "How Machines Learn", subTitle: "3 Red 1 Green • 214k views • 12 hours ago"),
-         Post(preview: "p3", acountImageStr: "p1", title: "Why we need to start caring for our environment", subTitle: "Kurzgezagt • 1.6M views • 14 hours ago")],
+        [],
         
         
         [Post(preview: "p7", acountImageStr: "cov5", title: "Neural Networks", subTitle: "3 Red 1 Green • 214k views • 6 days ago"),
@@ -102,5 +100,7 @@ struct DataStore {
          Post(preview: "p3", acountImageStr: "p1", title: "Why we need to start caring for our environment", subTitle: "Kurzgezagt • 1.6M views • 14 hours ago")]
         
     ]
+    
+    let emptyposts: [[Post]] = [[],[],[]]
     
 }

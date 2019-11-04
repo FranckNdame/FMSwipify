@@ -20,6 +20,7 @@
 		82575F52C51707AD6756A6EB6C22591E /* FMSwipify-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9142D0CE85D639382226824E34EA94A5 /* FMSwipify-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AF4533299BDB5B7B801C5C64FDF384EF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
 		CF560D4A2F4F5D6E8895DCCB2AEBB47D /* Pods-FMSwipify_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 172B1A49B06E2CCC408BB6E67A4733C4 /* Pods-FMSwipify_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EE92E2A42370928500B5ED74 /* PlaceholderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE92E2A32370928500B5ED74 /* PlaceholderCell.swift */; };
 		F3FB47361FE9D51E0784A36B04626C74 /* Pods-FMSwipify_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA771A752345F5AE055CF051E3F76B /* Pods-FMSwipify_Example-dummy.m */; };
 		F947860ADADB909B55CE05026CB88374 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
 /* End PBXBuildFile section */
@@ -77,6 +78,7 @@
 		DC82513F16853B61570D32DAEC76532D /* Pods-FMSwipify_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-FMSwipify_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		DE3DF8BD8D5CE9C00A74E9EF50695B15 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		E53AD4F190984D9D8DBB9A9C4A26AFBD /* FMSwipify.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = FMSwipify.modulemap; sourceTree = "<group>"; };
+		EE92E2A32370928500B5ED74 /* PlaceholderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaceholderCell.swift; path = FMSwipify/Classes/View/PlaceholderCell.swift; sourceTree = "<group>"; };
 		F1EE4DCEB880199ECD630EA9E0CB47A6 /* FMSwipify-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FMSwipify-dummy.m"; sourceTree = "<group>"; };
 		F2E634BF531E4196D1685EF80DBB1DC8 /* FMSwipify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FMSwipify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -127,6 +129,7 @@
 				5B87AD7D232A8F040088EE16 /* SectionBarCell.swift */,
 				5B87AD7F232A8F050088EE16 /* SwipifyBaseCell.swift */,
 				5B87AD7C232A8F040088EE16 /* SwipifyCell.swift */,
+				EE92E2A32370928500B5ED74 /* PlaceholderCell.swift */,
 				CBD6EC29CB8A27E52B562B92CC957F87 /* Pod */,
 				DEA08DA7B55EFEAA18D3E25D0B026263 /* Support Files */,
 			);
@@ -395,6 +398,7 @@
 				5BEE278C232A72EC00CF4A9F /* UIView++.swift in Sources */,
 				5B87AD82232A8F050088EE16 /* SectionBar.swift in Sources */,
 				5B87AD7B232A8EF80088EE16 /* SwipifyController.swift in Sources */,
+				EE92E2A42370928500B5ED74 /* PlaceholderCell.swift in Sources */,
 				5B87AD81232A8F050088EE16 /* SectionBarCell.swift in Sources */,
 				5B87AD83232A8F050088EE16 /* SwipifyBaseCell.swift in Sources */,
 				519887D15B705B0A521FD34D989675DF /* FMSwipify-dummy.m in Sources */,

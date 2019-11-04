@@ -16,10 +16,7 @@ class ViewController: SwipifyController<PostCell, Post> {
     override var data: [[Post]] { return DataStore.store.posts }
     
     
-    
-    
-    
-    let config = Config(
+    lazy var config = Config(
         sectionTitleFont: .systemFont(ofSize: 16, weight: .medium),
         sectionsIcon: DataStore.store.icons,
         sectionIconSize: .init(width: 30, height: 30),
@@ -27,7 +24,8 @@ class ViewController: SwipifyController<PostCell, Post> {
         sectionsSelectedColor: .white,
         sectionsUnselectedColor: UIColor(white: 0, alpha: 0.6),
         sectionsSelectorColor: .white,
-        sectionSelectorType: .bar
+        sectionSelectorType: .bar,
+        placeholderImage: #imageLiteral(resourceName: "open-box")
     )
 
 
@@ -36,6 +34,11 @@ class ViewController: SwipifyController<PostCell, Post> {
         super.viewDidLoad()
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = .clear
+        let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = NSTextAlignment.center
+        let attributes = NSMutableAttributedString(string: "No New Requests!", attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .semibold), .foregroundColor: UIColor.lightGray, .paragraphStyle: paragraphStyle])
+        
+        config.placeholderAttributes = attributes
         setConfig(config)
         
         

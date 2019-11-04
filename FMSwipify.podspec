@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'FMSwipify'
-  s.version          = '0.2.6'
+  s.version          = '0.2.8'
   s.summary          = 'A framework that is meant to make your life easier when working with nested Collection Views'
 
 # This description is used to generate tags and improve search results.
@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
   s.homepage         = 'https://github.com/FranckNdame/FMSwipify'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'FranckNdame' => 'franck.mpouli@yahoo.com' }
+  s.author           = { 'FranckNdame' => 'franck.mpouli@yahoo.com', 'Ahmad Karkouti' => 'ahmad_karkouty@hotmail.com' }
   s.source           = { :git => 'https://github.com/FranckNdame/FMSwipify.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/@breezedoc_in'
 
