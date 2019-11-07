@@ -18,15 +18,18 @@ class SwipifyCell<U, T:SwipifyBaseCell<U>>: UICollectionViewCell, UICollectionVi
     var cellSize: CGSize = .zero
     var section = 0
     
+    
     // Placeholder
     var placeholderAttributes: NSAttributedString = NSAttributedString()
     var placeholderImage: UIImage = UIImage()
     
     weak var delegate: SwipifyCellDelegate?
     
-    let innerCollectionView: UICollectionView = {
+    open var innerMinInteritemSpacing: CGFloat = 0
+    open var innerMinLineSpacing: CGFloat = 0
+    
+    lazy var innerCollectionView: UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        cv.backgroundColor = .white
         return cv
     }()
     
@@ -93,7 +96,11 @@ class SwipifyCell<U, T:SwipifyBaseCell<U>>: UICollectionViewCell, UICollectionVi
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 2
+        return innerMinLineSpacing
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return innerMinInteritemSpacing
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

@@ -326,7 +326,6 @@ extension SectionBar: UICollectionViewDataSource, UICollectionViewDelegateFlowLa
             cvWidth -= size.width
         }
         
-        let x: CGFloat = CGFloat(dataCount)
         
         UIView.animate(withDuration: 0.25, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
             self.widthAnchorCst?.constant = size.width + 32 - (self.selectorType! == .bubble ? 16 : 0)

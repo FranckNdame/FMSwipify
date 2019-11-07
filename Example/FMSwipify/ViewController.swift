@@ -25,7 +25,8 @@ class ViewController: SwipifyController<PostCell, Post> {
         sectionsUnselectedColor: UIColor(white: 0, alpha: 0.6),
         sectionsSelectorColor: .white,
         sectionSelectorType: .bar,
-        placeholderImage: #imageLiteral(resourceName: "open-box")
+        placeholderImage: #imageLiteral(resourceName: "open-box"),
+        innerColletionBackground: UIColor.gray
     )
 
 

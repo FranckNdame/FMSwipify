@@ -31,8 +31,13 @@ public struct Config {
     public var placeholderImage: UIImage
     public var placeholderAttributes: NSAttributedString
     
+    public var innerColletionBackground: UIColor
+    public var innerMinInteritemSpacing: CGFloat
+    public var innerMinLineSpacing: CGFloat
+    
     @available(iOS 8.2, *)
-    public init(sectionsTitle: [String] = [],
+    public init(
+        sectionsTitle: [String] = [],
                 sectionTitleFont: UIFont = UIFont.systemFont(ofSize: 15, weight: .regular) ,
                 sectionsIcon: [UIImage] = [],
                 sectionIconSize: CGSize = .init(width: 30, height: 30),
@@ -44,8 +49,13 @@ public struct Config {
                 
                 sectionSelectorType: SelectorType = .bar,
                 placeholderImage: UIImage = UIImage(),
-                placeholderAttributes: NSAttributedString = NSAttributedString()
-    ) {
+                placeholderAttributes: NSAttributedString = NSAttributedString(),
+                
+                innerColletionBackground: UIColor = UIColor.green,
+                innerMinInteritemSpacing: CGFloat = 0,
+                innerMinLineSpacing: CGFloat = 0
+    )
+    {
         
         self.sectionsTitle = sectionsTitle
         self.sectionTitleFont = sectionTitleFont
@@ -60,6 +70,10 @@ public struct Config {
         
         self.placeholderImage = placeholderImage
         self.placeholderAttributes = placeholderAttributes
+        
+        self.innerColletionBackground = innerColletionBackground
+        self.innerMinInteritemSpacing = innerMinInteritemSpacing
+        self.innerMinLineSpacing = innerMinLineSpacing
         
     }
 }
@@ -78,8 +92,8 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
     }()
     
     open var cellSource: CellSource { return .nib }
-    open var cellAgain: CellSource { return .nib }
     open var cellSize: CGSize { return .zero }
+    
     public let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -171,6 +185,10 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
         cell.delegate = self
         cell.placeholderImage = config.placeholderImage
         cell.placeholderAttributes = config.placeholderAttributes
+        cell.innerCollectionView.backgroundColor = config.innerColletionBackground
+        cell.innerMinInteritemSpacing = config.innerMinInteritemSpacing
+        cell.innerMinLineSpacing = config.innerMinLineSpacing
+
         return cell
     }
     
