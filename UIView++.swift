@@ -86,7 +86,7 @@ extension UIView {
     }
     
     @available(iOS 9.0, *)
-    func fillSuperview(padding: UIEdgeInsets = .zero) {
+    public func fillSuperview(padding: UIEdgeInsets = .zero) {
         translatesAutoresizingMaskIntoConstraints = false
         if let superviewTopAnchor = superview?.topAnchor {
             topAnchor.constraint(equalTo: superviewTopAnchor, constant: padding.top).isActive = true
@@ -106,7 +106,7 @@ extension UIView {
     }
     
     @available(iOS 9.0, *)
-    func centerInSuperview(size: CGSize = .zero) {
+    public func centerInSuperview(size: CGSize = .zero) {
         translatesAutoresizingMaskIntoConstraints = false
         if let superviewCenterXAnchor = superview?.centerXAnchor {
             centerXAnchor.constraint(equalTo: superviewCenterXAnchor).isActive = true

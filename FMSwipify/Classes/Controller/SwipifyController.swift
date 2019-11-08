@@ -34,6 +34,7 @@ public struct Config {
     public var innerColletionBackground: UIColor
     public var innerMinInteritemSpacing: CGFloat
     public var innerMinLineSpacing: CGFloat
+    public var innerContentInset: UIEdgeInsets
     
     @available(iOS 8.2, *)
     public init(
@@ -53,7 +54,8 @@ public struct Config {
                 
                 innerColletionBackground: UIColor = UIColor.green,
                 innerMinInteritemSpacing: CGFloat = 0,
-                innerMinLineSpacing: CGFloat = 0
+                innerMinLineSpacing: CGFloat = 0,
+                innerContentInset: UIEdgeInsets = .zero
     )
     {
         
@@ -74,6 +76,7 @@ public struct Config {
         self.innerColletionBackground = innerColletionBackground
         self.innerMinInteritemSpacing = innerMinInteritemSpacing
         self.innerMinLineSpacing = innerMinLineSpacing
+        self.innerContentInset = innerContentInset
         
     }
 }
@@ -96,9 +99,9 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
     
     public let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.isPagingEnabled = true
         cv.backgroundColor = .clear
@@ -188,6 +191,7 @@ open class SwipifyController<T: SwipifyBaseCell<Y>, Y>: UIViewController, UIColl
         cell.innerCollectionView.backgroundColor = config.innerColletionBackground
         cell.innerMinInteritemSpacing = config.innerMinInteritemSpacing
         cell.innerMinLineSpacing = config.innerMinLineSpacing
+        cell.innerCollectionView.contentInset = config.innerContentInset
 
         return cell
     }

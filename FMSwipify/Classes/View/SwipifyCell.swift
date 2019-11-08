@@ -40,11 +40,7 @@ class SwipifyCell<U, T:SwipifyBaseCell<U>>: UICollectionViewCell, UICollectionVi
         innerCollectionView.dataSource = self
         self.clipsToBounds = false
         addSubview(innerCollectionView)
-        if #available(iOS 9.0, *) {
-            innerCollectionView.fillSuperview()
-        } else {
-            // Fallback on earlier versions
-        }
+        if #available(iOS 9.0, *) { innerCollectionView.fillSuperview() }
         
         if cellSource == .code {
             innerCollectionView.register(T.self, forCellWithReuseIdentifier: reuseidentifier)
@@ -55,6 +51,7 @@ class SwipifyCell<U, T:SwipifyBaseCell<U>>: UICollectionViewCell, UICollectionVi
         if #available(iOS 9.0, *) {
             innerCollectionView.register(PlaceholderCell.self, forCellWithReuseIdentifier: placeholderIdentifier)
         }
+
     }
     
     override func prepareForReuse() {
